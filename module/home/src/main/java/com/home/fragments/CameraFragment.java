@@ -1,14 +1,38 @@
 package com.home.fragments;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.home.R;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Objects;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,7 +40,16 @@ import com.home.R;
  * create an instance of this fragment.
  */
 public class CameraFragment extends Fragment {
-
+    private static String[] items = new String[]{
+            "拍照",
+            "从相册中选择",
+    };
+    private static String TAG = "CAMERA";
+    private static final int TAKE_PHOTO = 1;//声明一个请求码，用于识别返回的结果
+    private static final int SCAN_OPEN_PHONE = 2;// 相册
+    private Uri imageUri;
+    private String picPath;
+    Bitmap bitmap;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -61,6 +94,104 @@ public class CameraFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_camera, container, false);
+        View v = inflater.inflate(R.layout.fragment_camera, container, false);
+        choosePic();
+        return v;
+    }
+
+    public void choosePic() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+                .setTitle("请选择图片")
+                .setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (i == 0) {
+                            openCamera();
+                            Log.d(TAG, "openCamera");
+                        } else {
+                            openGallery();
+                            Log.d(TAG, "openGallery");
+
+                        }
+                        return;
+                    }
+                });
+        builder.create().show();
+
+    }
+
+    private void openCamera() {
+        String imageName = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(new Date());
+        File outputImage = new File(getActivity().getExternalCacheDir(), imageName + ".jpg");
+        Objects.requireNonNull(outputImage.getParentFile()).mkdirs();
+        try {
+            if (outputImage.exists()) {
+                outputImage.delete();
+            }
+            boolean a = outputImage.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (Build.VERSION.SDK_INT >= 24) {
+            imageUri = FileProvider.getUriForFile(getActivity(), "com.aiillustration.fileprovider", outputImage);
+            picPath = imageUri.getPath();
+            Log.d(TAG, picPath);
+        } else {
+            imageUri = Uri.fromFile(outputImage);
+            picPath = imageUri.getPath();
+        }
+        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+        intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri);
+        startActivityForResult(intent,TAKE_PHOTO);
+    }
+
+    private void openGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, SCAN_OPEN_PHONE);
+    }
+    @SuppressLint("SetTextI18n")
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
+        super.onActivityResult(requestCode,resultCode,data);
+//        Log.d(TAG,getActivity().getLocalClassName());
+        ImageView img = getView().findViewById(R.id.pic_test);
+        switch (requestCode){
+            case TAKE_PHOTO:
+                if(resultCode == RESULT_OK){
+                    try {
+                        bitmap = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(imageUri));
+
+                    }catch (FileNotFoundException e){
+                        e.printStackTrace();
+                    }
+//                    picPath = imageUri.getPath().toString();
+                    picPath = getActivity().getExternalCacheDir().getPath()+imageUri.getPath();
+                    Log.d(TAG,picPath);
+
+                    img.setImageBitmap(bitmap);
+                    img.invalidate();
+                }
+                break;
+            case SCAN_OPEN_PHONE:
+                if(resultCode == RESULT_OK){
+                    Uri selectImage=data.getData();
+                    String[] FilePathColumn={MediaStore.Images.Media.DATA};
+                    Cursor cursor = getContext().getContentResolver().query(selectImage,
+                            FilePathColumn, null, null, null);
+                    cursor.moveToFirst();
+                    //从数据视图中获取已选择图片的路径
+                    int columnIndex = cursor.getColumnIndex(FilePathColumn[0]);
+                    picPath = cursor.getString(columnIndex);
+                    Log.d(TAG,picPath);
+                    cursor.close();
+                    Bitmap bitmap = BitmapFactory.decodeFile(picPath);
+                    img.setImageBitmap(bitmap);
+                    img.invalidate();
+                }
+                break;
+            default:
+                break;
+        }
+
+
     }
 }
