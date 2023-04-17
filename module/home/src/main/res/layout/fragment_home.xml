@@ -67,6 +67,7 @@
                 ></TextView>
 
             <EditText
+                android:id="@+id/input_des"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_marginStart="@dimen/blankH"
@@ -93,6 +94,7 @@
                 android:textSize="@dimen/home_item_text"
                 ></TextView>
             <EditText
+                android:id="@+id/input_seed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/blankH"

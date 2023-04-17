@@ -4,9 +4,14 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.SeekBar;
 
 import com.home.R;
 
@@ -16,7 +21,15 @@ import com.home.R;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
-
+    private SeekBar sb_redraw_factor;
+    private ImageView pic;
+    private EditText input_des;
+    private EditText input_seed;
+    private Button btn_draw;
+    public static String TAG = "Home";
+    private int desProcess;
+    private int seed;
+    private String des;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -61,6 +74,40 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View v = inflater.inflate(R.layout.fragment_home, container, false);
+        sb_redraw_factor = v.findViewById(R.id.sb_redraw_factor);
+        input_des = v.findViewById(R.id.input_des);
+        input_seed = v.findViewById(R.id.input_seed);
+        btn_draw = v.findViewById(R.id.home_btn_draw);
+        pic = v.findViewById(R.id.pic);
+        desProcess = 0;
+        sb_redraw_factor.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                desProcess = seekBar.getProgress();
+            }
+        });
+        btn_draw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                seed = Integer.parseInt(input_seed.getText().toString());
+                des = input_des.getText().toString();
+                Log.d(TAG,"click draw");
+            }
+        });
+
+        return v;
     }
+
+
 }
