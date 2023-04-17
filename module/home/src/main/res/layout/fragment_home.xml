@@ -3,12 +3,121 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.HomeFragment">
+    tools:context=".fragments.HomeFragment"
+    >
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/nav_item_1" />
+        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/pic"
+            android:layout_width="300dp"
+            android:layout_height="400dp"
+            android:layout_marginStart="@dimen/blankH"
+            android:layout_marginEnd="@dimen/blankH"
+            android:layout_marginTop="@dimen/blankV"
+            android:layout_gravity="center"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_pic_null"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="@dimen/blankH"
+            android:layout_marginEnd="@dimen/blankH"
+            android:layout_marginTop="@dimen/blankV"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/home_item_1"
+                android:textColor="@color/theme_red"
+                android:textSize="@dimen/home_item_text"
+                ></TextView>
+            <SeekBar
+                android:id="@+id/sb_redraw_factor"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/blankH"
+                android:thumbTint="@color/theme_pink"
+                android:progressTint="@color/theme_pink"
+                android:max="100"
+
+
+                />
+        </LinearLayout>
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="@dimen/blankH"
+        android:layout_marginEnd="@dimen/blankH"
+        android:layout_marginTop="@dimen/blankV">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/home_item_2"
+                android:textColor="@color/theme_red"
+                android:textSize="@dimen/home_item_text"
+                ></TextView>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginStart="@dimen/blankH"
+                android:backgroundTint="@color/theme_pink"
+                android:foregroundTint="@color/theme_pink"
+                android:hint="@string/home_dis_hint"
+                android:maxLength="200"
+                android:maxLines="5"
+                android:textCursorDrawable="@null"
+                android:textSize="@dimen/home_item_text" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="@dimen/blankH"
+            android:layout_marginEnd="@dimen/blankH"
+            android:layout_marginTop="@dimen/blankV">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/home_item_3"
+                android:textColor="@color/theme_red"
+                android:textSize="@dimen/home_item_text"
+                ></TextView>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/blankH"
+
+                android:hint="@string/home_seed_hint"
+                android:textSize="@dimen/home_item_text"
+                android:maxLength="8"
+                android:backgroundTint="@color/theme_pink"
+                android:foregroundTint="@color/theme_pink"
+                android:textCursorDrawable="@null"
+                android:inputType="number"
+                />
+        </LinearLayout>
+        <Button
+            android:id="@+id/home_btn_draw"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/blankV"
+            android:layout_marginBottom="@dimen/blankV"
+            android:text="@string/home_btn_draw"
+            android:textColor="@color/theme_red"
+            android:textSize="@dimen/home_item_text"
+            ></Button>
+
+    </LinearLayout>
 
 </FrameLayout>
