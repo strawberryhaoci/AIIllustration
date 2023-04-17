@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.AIIllustration" parent="Theme.MaterialComponents.DayNight">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#FFC8C8</item>
+        <item name="colorPrimary">@color/theme_pink</item>
         <item name="colorPrimaryVariant">#FDD7D7</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
