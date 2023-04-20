@@ -1,7 +1,10 @@
 package com.home.fragments;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -15,6 +18,8 @@ import android.widget.SeekBar;
 
 import com.home.R;
 
+import java.util.Random;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link HomeFragment#newInstance} factory method to
@@ -26,10 +31,11 @@ public class HomeFragment extends Fragment {
     private EditText input_des;
     private EditText input_seed;
     private Button btn_draw;
-    public static String TAG = "Home";
+    public static String TAG = "HomeFrag";
     private int desProcess;
     private int seed;
     private String des;
+    private String picPath = "";
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -100,14 +106,38 @@ public class HomeFragment extends Fragment {
         btn_draw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                seed = Integer.parseInt(input_seed.getText().toString());
+                String seedStr = input_seed.getText().toString();
+                if (seedStr != null && (!seedStr.isEmpty())) {
+                    seed = Integer.parseInt(seedStr);
+                } else {
+                    Random r = new Random();
+                    seed = r.nextInt(1000000);
+                }
                 des = input_des.getText().toString();
-                Log.d(TAG,"click draw");
+                Log.d(TAG, "click draw");
             }
         });
 
         return v;
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        Log.d(TAG, "hidden change");
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "resume");
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            picPath = bundle.getString("picPath");
+            Log.d(TAG, picPath);
+            Bitmap bitmap = BitmapFactory.decodeFile(picPath);
+            pic.setImageBitmap(bitmap);
+            pic.invalidate();
+        }
+    }
 }

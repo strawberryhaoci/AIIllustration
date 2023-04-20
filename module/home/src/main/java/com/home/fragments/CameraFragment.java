@@ -14,7 +14,10 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -96,6 +99,7 @@ public class CameraFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_camera, container, false);
         choosePic();
+
         return v;
     }
 
@@ -122,7 +126,8 @@ public class CameraFragment extends Fragment {
 
     private void openCamera() {
         String imageName = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(new Date());
-        File outputImage = new File(getActivity().getExternalCacheDir(), imageName + ".jpg");
+//        File outputImage = new File(getActivity().getExternalCacheDir(), imageName + ".jpg");
+        File outputImage = new File(Environment.getExternalStorageDirectory() + "/DCIM/4L", imageName + ".jpg");
         Objects.requireNonNull(outputImage.getParentFile()).mkdirs();
         try {
             if (outputImage.exists()) {
@@ -134,54 +139,56 @@ public class CameraFragment extends Fragment {
         }
         if (Build.VERSION.SDK_INT >= 24) {
             imageUri = FileProvider.getUriForFile(getActivity(), "com.aiillustration.fileprovider", outputImage);
-            picPath = imageUri.getPath();
-            Log.d(TAG, picPath);
+//            picPath = imageUri.getPath();
+            picPath = Environment.getExternalStorageDirectory().getPath() + "/DCIM/4L/" + imageName + ".jpg";
+            Log.d(TAG, ">=24" + picPath);
         } else {
             imageUri = Uri.fromFile(outputImage);
             picPath = imageUri.getPath();
         }
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-        intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri);
-        startActivityForResult(intent,TAKE_PHOTO);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        startActivityForResult(intent, TAKE_PHOTO);
     }
 
     private void openGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, SCAN_OPEN_PHONE);
     }
+
     @SuppressLint("SetTextI18n")
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
-        super.onActivityResult(requestCode,resultCode,data);
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 //        Log.d(TAG,getActivity().getLocalClassName());
         ImageView img = getView().findViewById(R.id.pic_test);
-        switch (requestCode){
+        switch (requestCode) {
             case TAKE_PHOTO:
-                if(resultCode == RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     try {
                         bitmap = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(imageUri));
 
-                    }catch (FileNotFoundException e){
+                    } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
 //                    picPath = imageUri.getPath().toString();
-                    picPath = getActivity().getExternalCacheDir().getPath()+imageUri.getPath();
-                    Log.d(TAG,picPath);
+//                    picPath = getActivity().getExternalCacheDir().getPath()+imageUri.getPath();
+                    Log.d(TAG, picPath);
 
                     img.setImageBitmap(bitmap);
                     img.invalidate();
                 }
                 break;
             case SCAN_OPEN_PHONE:
-                if(resultCode == RESULT_OK){
-                    Uri selectImage=data.getData();
-                    String[] FilePathColumn={MediaStore.Images.Media.DATA};
+                if (resultCode == RESULT_OK) {
+                    Uri selectImage = data.getData();
+                    String[] FilePathColumn = {MediaStore.Images.Media.DATA};
                     Cursor cursor = getContext().getContentResolver().query(selectImage,
                             FilePathColumn, null, null, null);
                     cursor.moveToFirst();
                     //从数据视图中获取已选择图片的路径
                     int columnIndex = cursor.getColumnIndex(FilePathColumn[0]);
                     picPath = cursor.getString(columnIndex);
-                    Log.d(TAG,picPath);
+                    Log.d(TAG, picPath);
                     cursor.close();
                     Bitmap bitmap = BitmapFactory.decodeFile(picPath);
                     img.setImageBitmap(bitmap);
@@ -191,7 +198,11 @@ public class CameraFragment extends Fragment {
             default:
                 break;
         }
-
+        //照片路径传给fragment1
+        Bundle bundle = new Bundle();
+        bundle.putString("picPath", picPath);
+        NavController controller = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+        controller.navigate(R.id.action_nav_2_to_nav_1, bundle);
 
     }
 }
