@@ -9,6 +9,15 @@
     <string name="home_btn_draw">绘制</string>
     <string name="home_dis_hint">描述一下您的照片吧</string>
     <string name="home_seed_hint">请任意输入一个数字吧</string>
+    <string name="login">登录</string>
+    <string name="username">用户名</string>
+    <string name="password">密码</string>
+    <string name="login_phone_hint">手机号码</string>
+    <string name="login_pwd_hint">登录密码</string>
+    <string name="login_pwd_hint1">请再次输入登录密码</string>
+    <string name="password_hint">密码应由字母、数字组成，长度在8-16之间</string>
+    <string name="register">注册新用户</string>
+    <string name="find_pwd">找回密码</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -16,7 +16,8 @@ public class PermissionUtil {
     public static void askPermission(Activity activity) {
         ActivityCompat.requestPermissions(activity,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.CAMERA
+                Manifest.permission.CAMERA,
+                Manifest.permission.WRITE_SETTINGS
         },0);
     }
 }

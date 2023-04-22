@@ -5,4 +5,12 @@
     <dimen name="blankV">5dp</dimen>
     <dimen name="home_item_text">14sp</dimen>
     <dimen name="home_item_width">50dp</dimen>
+    <dimen name="user_blankH">30dp</dimen>
+    <dimen name="user_blankW">30dp</dimen>
+    <dimen name="user_box_height">40dp</dimen>
+    <dimen name="user_box_weight">100dp</dimen>
+    <dimen name="user_btn_width">50dp</dimen>
+    <dimen name="user_item_text">15sp</dimen>
+    <dimen name="hint_text">12sp</dimen>
+    <dimen name="blankH_0">10dp</dimen>
 </resources>
