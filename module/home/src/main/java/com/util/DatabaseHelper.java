@@ -133,4 +133,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return null;
     }
+    //修改密码
+    public int updateUserPwd(String username,String password){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(UserTable.COL_PASSWORD,password);
+        int idReturn = db.update(UserTable.TABLE_NAME,values,UserTable.COL_USERNAME+" =? ",
+                new String[]{username});
+        db.close();
+        return idReturn;
+    }
+    public int getUserCount() {
+        String countQuery = "select * from "+UserTable.TABLE_NAME;
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery,null);
+        int count = cursor.getCount();
+        cursor.close();
+        return count;
+    }
+    public  int deleteUser(int id){
+        SQLiteDatabase db = getWritableDatabase();
+        int idReturnByDelete = db.delete(UserTable.TABLE_NAME,UserTable.COL_ID+"=? ",
+                new String[]{String.valueOf(id)});
+        db.close();
+        return idReturnByDelete;
+    }
+    public int deleteAllUser(){
+        SQLiteDatabase db = getWritableDatabase();
+        int idReturnByDelete = db.delete(UserTable.TABLE_NAME,String.valueOf(1),null);
+        db.close();
+        return idReturnByDelete;
+    }
 }

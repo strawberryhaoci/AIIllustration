@@ -13,4 +13,6 @@
     <dimen name="user_item_text">15sp</dimen>
     <dimen name="hint_text">12sp</dimen>
     <dimen name="blankH_0">10dp</dimen>
+    <dimen name="blankH_1">20dp</dimen>
+    <dimen name="blankH_2">30dp</dimen>
 </resources>

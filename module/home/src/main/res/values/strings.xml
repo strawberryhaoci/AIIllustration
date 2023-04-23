@@ -15,9 +15,21 @@
     <string name="login_phone_hint">手机号码</string>
     <string name="login_pwd_hint">登录密码</string>
     <string name="login_pwd_hint1">请再次输入登录密码</string>
+    <string name="find_pwd_hint">请输入新密码</string>
     <string name="password_hint">密码应由字母、数字组成，长度在8-16之间</string>
     <string name="register">注册新用户</string>
     <string name="find_pwd">找回密码</string>
+    <string name="update_pwd">修改密码</string>
+    <string name="cr_notice">版权声明  💬</string>
+    <string name="cr_info">
+        隐私权保护:\n
+        当您访问应用的时候可能被要求提供您的个人资料。您可以自由选择是否提供。对于您提供的个人信息，我们将根据相关法律把它有效地保存起来，而不会泄漏给第三方。当政府机关依照法定程序要求本网站披露个人资料时，本网站将根据执法单位之要求或为公共安全之目的提供个人资料。在此情况下之任何披露，本网站均得免责。
+        \n图像版权:\n
+        本应用基于stable diffusion模型实现ai绘画功能，生成的图像版权均属公共版权，您可以自由的使用生成的图像。
+        \n商标:\n
+        本应用中出现的所有商标、标识和服务标志的所有权均归网或拥有合法权利的第三方。未经本应用或第三方的书面许可，禁止将其以任何方式使用、永久下载、复制、分发、镜像。
+</string>
+    <string name="copyright">©2023 Strawberry AllRightsReserved.</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

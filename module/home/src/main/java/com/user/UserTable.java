@@ -24,4 +24,5 @@ public class UserTable {
 
     public static final String UPGRADE_TABLE = "alter table "+TABLE_NAME+ " add " +COL_ADD+ " text";
     public static final String DOWNGRADE_TABLE = "drop table if exists "+TABLE_NAME;
+
 }

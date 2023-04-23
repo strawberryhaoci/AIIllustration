@@ -26,7 +26,9 @@ import com.home.HomeActivity;
 import com.home.R;
 import com.user.User;
 import com.util.DatabaseHelper;
+import com.util.DialogUtil;
 import com.util.FragmentUtil;
+import com.util.MD5Utils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -87,12 +89,11 @@ public class UserFragment extends Fragment {
         //创建数据库
         DatabaseHelper dbHelper = new DatabaseHelper(getContext());
         SQLiteDatabase sqliteDB = dbHelper.getWritableDatabase();
-
-        User testU = new User("0000","12345678");
-        long testInsert = dbHelper.insertUser(testU);
-        Log.d(TAG, Long.toString(testInsert));
-        User testQ = dbHelper.queryUserByName("test");
-        Log.d(TAG, "onCreateView: "+testQ.getPassword());
+//        User testU = new User("0000",MD5Utils.md5Password("12345678"));
+//        long testInsert = dbHelper.insertUser(testU);
+//        Log.d(TAG, Long.toString(testInsert));
+//        User testQ = dbHelper.queryUserByName("0000");
+//        Log.d(TAG, "onCreateView: "+testQ.getPassword());
         //点击登录
         btn_login.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("ResourceType")
@@ -102,10 +103,11 @@ public class UserFragment extends Fragment {
                 String input_phone = et_phone.getText().toString();
                 String input_pwd = et_pwd.getText().toString();
                 User loginu = dbHelper.queryUserByName(input_phone);
+//                String m5 = MD5Utils.md5Password(input_pwd);
                 if(loginu == null){
                     Toast.makeText(getContext(), "未注册", Toast.LENGTH_SHORT).show();
                 }
-                else if(loginu.getPassword() .equals(input_pwd)){
+                else if( MD5Utils.verify(loginu.getPassword(),input_pwd)){
                     Toast.makeText(getContext(), "登陆成功", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "onClick: login");
                     //切换界面
@@ -135,7 +137,7 @@ public class UserFragment extends Fragment {
             public void onClick(View view) {
                 FragmentManager fragmentManager = getFragmentManager();
                 //TODO: replace fragment
-                FragmentUtil.replaceFragment(fragmentManager,new RegisterFragment());
+                FragmentUtil.replaceFragment(fragmentManager,new FindPasswordFragment());
             }
         });
         Switch sw_pwd = v.findViewById(R.id.sw_pwd);
@@ -148,6 +150,13 @@ public class UserFragment extends Fragment {
                 else {
                     et_pwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 }
+            }
+        });
+        TextView text_cr_notice = v.findViewById(R.id.text_copyright_notice);
+        text_cr_notice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogUtil.showDialog(getActivity(),R.string.cr_info,"版权声明");
             }
         });
         return v;

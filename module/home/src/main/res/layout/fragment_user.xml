@@ -124,6 +124,7 @@
             android:text="@string/login"
             android:textSize="@dimen/user_item_text"
             />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -152,6 +153,35 @@
                 android:gravity="center"
                 />
         </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center|bottom"
+            >
+            <TextView
+                android:id="@+id/text_copyright_notice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/text_copyright"
+                android:layout_marginBottom="@dimen/blankH_0"
+                android:layout_marginLeft="80dp"
+                android:text="@string/cr_notice"
+                android:textColor="@color/grey_1"
+                android:textSize="@dimen/hint_text"
+
+                />
+
+            <TextView
+                android:id="@+id/text_copyright"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/blankH_0"
+                android:text="@string/copyright"
+                android:textColor="@color/grey_1"
+                android:textSize="@dimen/hint_text" />
+        </RelativeLayout>
+
     </LinearLayout>
     <!-- TODO: Update blank fragment layout -->
 
