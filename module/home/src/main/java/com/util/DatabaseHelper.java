@@ -11,8 +11,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.user.Pic;
+import com.user.PicTable;
 import com.user.User;
 import com.user.UserTable;
+
+import java.util.ArrayList;
 
 import androidx.annotation.Nullable;
 
@@ -41,8 +45,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //创建表
         String sql = UserTable.CREATE_TABLE;
+        String sqlPic = PicTable.CREATE_TABLE;
         //直到getWritableDatabase()/getReadableDatabase()第一次被调用
         db.execSQL(sql);
+        db.execSQL(sqlPic);
+
         Log.d(TAG, "onCreate: dbCreate");
     }
 
@@ -63,11 +70,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super.onDowngrade(db, oldVersion, newVersion);
         if (oldVersion > 2){
             db.execSQL(UserTable.DOWNGRADE_TABLE);
+            db.execSQL(PicTable.DOWNGRADE_TABLE);
         }
     }
-
+    public long insertPic(Pic pic){
+        Log.d(TAG,"insertPic");
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(PicTable.COL_USERNAME,pic.getUsername());
+        values.put(PicTable.COL_DES,pic.getDes());
+        values.put(PicTable.COL_REDRAWFACTOR,pic.getRedrawFactor());
+        values.put(PicTable.COL_SEED,pic.getSeed());
+        values.put(PicTable.COL_ORIPATH,pic.getGenPath());
+        values.put(PicTable.COL_GENPATH,pic.getGenPath());
+        long id = db.insert(PicTable.TABLE_NAME,null,values);
+        db.close();
+        return id;
+    }
     public long insertUser(User user){
-        Log.d(TAG,"insert");
+        Log.d(TAG,"insertUser");
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(UserTable.COL_USERNAME,user.getUsername());
@@ -77,7 +98,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return id;
     }
+    public ArrayList<Pic> queyPicByUsername(String name){
+        ArrayList<Pic> picArrayList= new ArrayList<Pic>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] colArray = new String[]{
+                PicTable.COL_ID,
+                PicTable.COL_GENPATH,
+                PicTable.COL_DES,
+                PicTable.COL_SEED,
+                PicTable.COL_REDRAWFACTOR
+        };
+        Cursor cursor = db.query(PicTable.TABLE_NAME,colArray,
+                PicTable.COL_USERNAME+"=? ",
+                new String[]{name},
+                null,null,PicTable.COL_ID);
+        if(cursor != null ){
+            while ( cursor.moveToNext()){
+                @SuppressLint("Range") int id = cursor.getInt(cursor.getColumnIndex(PicTable.COL_ID));
+                @SuppressLint("Range") String genPath = cursor.getString(cursor.getColumnIndex(PicTable.COL_GENPATH));
+                @SuppressLint("Range") String des = cursor.getString(cursor.getColumnIndex(PicTable.COL_DES));
+                @SuppressLint("Range") int refactor = cursor.getInt(cursor.getColumnIndex(PicTable.COL_REDRAWFACTOR));
+                @SuppressLint("Range") int seed = cursor.getInt(cursor.getColumnIndex(PicTable.COL_SEED));
+                Pic p = new Pic();
+                p.setPicId(id);
+                p.setGenPath(genPath);
+                p.setDes(des);
+                p.setSeed(seed);
+                p.setRedrawFactor(refactor);
+                picArrayList.add(p);
 
+            }
+        }
+        db.close();
+        return picArrayList;
+    }
     public User queryUserByName(String name){
         User u = new User();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -133,6 +187,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return null;
     }
+    //修改图片信息
+    public int updatePic(Pic pic){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(PicTable.COL_GENPATH,pic.getGenPath());
+        values.put(PicTable.COL_ORIPATH,pic.getOriPath());
+        values.put(PicTable.COL_SEED,pic.getSeed());
+        values.put(PicTable.COL_DES,pic.getDes());
+        values.put(PicTable.COL_REDRAWFACTOR,pic.getRedrawFactor());
+
+        int idReturn = db.update(PicTable.TABLE_NAME,values,PicTable.COL_ID+" =? ",
+                new String[]{Integer.toString(pic.getPicId())});
+        db.close();
+        return idReturn;
+    }
     //修改密码
     public int updateUserPwd(String username,String password){
         SQLiteDatabase db = getWritableDatabase();
@@ -161,6 +230,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public int deleteAllUser(){
         SQLiteDatabase db = getWritableDatabase();
         int idReturnByDelete = db.delete(UserTable.TABLE_NAME,String.valueOf(1),null);
+        db.close();
+        return idReturnByDelete;
+    }
+    public int deleteAllPic(){
+        SQLiteDatabase db = getWritableDatabase();
+        int idReturnByDelete = db.delete(PicTable.TABLE_NAME,String.valueOf(1),null);
         db.close();
         return idReturnByDelete;
     }

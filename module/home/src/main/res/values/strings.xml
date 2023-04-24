@@ -4,14 +4,20 @@
     <string name="nav_item_2">拍摄</string>
     <string name="nav_item_3">我</string>
     <string name="home_item_1">还原度</string>
+    <string name="redraw_factor">还原度</string>
     <string name="home_item_2">描述</string>
+    <string name="des">描述</string>
     <string name="home_item_3">种子</string>
+    <string name="seed">种子</string>
     <string name="home_btn_draw">绘制</string>
     <string name="home_dis_hint">描述一下您的照片吧</string>
     <string name="home_seed_hint">请任意输入一个数字吧</string>
     <string name="login">登录</string>
+    <string name="logout">退出登录</string>
     <string name="username">用户名</string>
     <string name="password">密码</string>
+    <string name="sign">v50KFC</string>
+    <string name="my_work">我的作品</string>
     <string name="login_phone_hint">手机号码</string>
     <string name="login_pwd_hint">登录密码</string>
     <string name="login_pwd_hint1">请再次输入登录密码</string>
@@ -21,6 +27,7 @@
     <string name="find_pwd">找回密码</string>
     <string name="update_pwd">修改密码</string>
     <string name="cr_notice">版权声明  💬</string>
+    <string name="local_serve">http://127.0.0.1:7860</string>
     <string name="cr_info">
         隐私权保护:\n
         当您访问应用的时候可能被要求提供您的个人资料。您可以自由选择是否提供。对于您提供的个人信息，我们将根据相关法律把它有效地保存起来，而不会泄漏给第三方。当政府机关依照法定程序要求本网站披露个人资料时，本网站将根据执法单位之要求或为公共安全之目的提供个人资料。在此情况下之任何披露，本网站均得免责。

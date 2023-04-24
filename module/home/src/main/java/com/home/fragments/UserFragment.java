@@ -29,6 +29,9 @@ import com.util.DatabaseHelper;
 import com.util.DialogUtil;
 import com.util.FragmentUtil;
 import com.util.MD5Utils;
+import com.util.SPUtils;
+
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -85,7 +88,14 @@ public class UserFragment extends Fragment {
         EditText et_phone = v.findViewById(R.id.text_phone);
         EditText et_pwd = v.findViewById(R.id.text_password);
         Button btn_login = v.findViewById(R.id.btn_login);
-
+        //TODO:若已登录过，跳转到userInfo
+        String username = (String) SPUtils.get(getContext(),"username","");
+        if(username!=null && (!username.equals(""))){
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentUtil.replaceFragment(fragmentManager,new UserInfoFragment());
+            Map<String,?> map = SPUtils.getAll(getContext());
+            Log.d(TAG, "SP: "+username);
+        }
         //创建数据库
         DatabaseHelper dbHelper = new DatabaseHelper(getContext());
         SQLiteDatabase sqliteDB = dbHelper.getWritableDatabase();
@@ -108,12 +118,15 @@ public class UserFragment extends Fragment {
                     Toast.makeText(getContext(), "未注册", Toast.LENGTH_SHORT).show();
                 }
                 else if( MD5Utils.verify(loginu.getPassword(),input_pwd)){
+                    //TODO:将用户信息存入SP
+                    SPUtils.put(getContext(),"username",input_phone);
+
                     Toast.makeText(getContext(), "登陆成功", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "onClick: login");
                     //切换界面
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction transaction = fragmentManager.beginTransaction();
-                    transaction.replace(R.id.nav_host_fragment,new HomeFragment());
+                    transaction.replace(R.id.nav_host_fragment,new UserInfoFragment());
                     transaction.commit();
                 }
                 else{

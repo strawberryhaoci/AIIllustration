@@ -21,6 +21,7 @@
         <entry key="..\:/workspace/AIIllustration/module/home/src/main/res/drawable/ic_phone.xml" value="0.1" />
         <entry key="..\:/workspace/AIIllustration/module/home/src/main/res/drawable/ic_pic_null.xml" value="0.1015" />
         <entry key="..\:/workspace/AIIllustration/module/home/src/main/res/drawable/ic_questionmark.xml" value="0.1145" />
+        <entry key="..\:/workspace/AIIllustration/module/home/src/main/res/drawable/ic_works.xml" value="0.1095" />
         <entry key="..\:/workspace/AIIllustration/module/home/src/main/res/drawable/thumb_pwd.xml" value="0.1" />
         <entry key="..\:/workspace/AIIllustration/module/home/src/main/res/layout/activity_home.xml" value="0.176" />
         <entry key="..\:/workspace/AIIllustration/module/home/src/main/res/layout/fragment_camera.xml" value="0.15625" />
@@ -28,7 +29,8 @@
         <entry key="..\:/workspace/AIIllustration/module/home/src/main/res/layout/fragment_home.xml" value="0.152" />
         <entry key="..\:/workspace/AIIllustration/module/home/src/main/res/layout/fragment_register.xml" value="0.1419753086419753" />
         <entry key="..\:/workspace/AIIllustration/module/home/src/main/res/layout/fragment_user.xml" value="0.2" />
-        <entry key="..\:/workspace/AIIllustration/module/home/src/main/res/layout/fragment_user_info.xml" value="0.1203125" />
+        <entry key="..\:/workspace/AIIllustration/module/home/src/main/res/layout/fragment_user_info.xml" value="0.2" />
+        <entry key="..\:/workspace/AIIllustration/module/home/src/main/res/layout/list_item.xml" value="0.4" />
         <entry key="..\:/workspace/AIIllustration/module/home/src/main/res/layout/mobile_navigation.xml" value="0.1" />
         <entry key="..\:/workspace/AIIllustration/module/home/src/main/res/layout/nav_menu.xml" value="0.1" />
         <entry key="..\:/workspace/AIIllustration/module/home/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.106" />

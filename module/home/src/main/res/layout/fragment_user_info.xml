@@ -3,12 +3,78 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.UserInfoFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
+    <LinearLayout
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/theme_light_pink"
+            >
+            <ImageView
+                android:id="@+id/user_img"
+                android:layout_width="@dimen/user_img_hw"
+                android:layout_height="@dimen/user_img_hw"
+                android:layout_marginLeft="@dimen/blankH"
+                android:layout_marginVertical="@dimen/blankH_2"
+                android:src="@drawable/user_img_girl"
+                />
+            <TextView
+                android:id="@+id/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/user_img"
+                android:text="@string/username"
+                android:textSize="@dimen/user_item_text"
+                android:layout_marginLeft="@dimen/blankH"
+                android:layout_marginTop="@dimen/blankH_3"
+
+                />
+            <TextView
+                android:id="@+id/user_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/user_img"
+                android:text="@string/sign"
+                android:textSize="@dimen/hint_text"
+                android:layout_marginLeft="@dimen/blankH"
+                android:layout_marginTop="@dimen/blankH1_2"
+                android:textColor="@color/grey_1"
+
+
+                />
+        </RelativeLayout>
+        <com.google.android.material.appbar.MaterialToolbar
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/blankH_4"
+            app:title="@string/my_work"
+            app:logo="@drawable/ic_works"
+            app:titleTextColor="@color/theme_red"
+            app:titleCentered="true"
+            android:background="@drawable/bg_dialog"
+            />
+        <ListView
+            android:id="@+id/picList"
+            android:layout_marginTop="@dimen/blankH"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            tools:listitem="@layout/list_item"
+            ></ListView>
+        <Button
+            android:id="@+id/btn_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/blankH"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_btn"
+            android:text="@string/logout"
+            />
+    </LinearLayout>
 
 </FrameLayout>
