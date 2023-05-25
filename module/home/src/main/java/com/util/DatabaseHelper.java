@@ -55,10 +55,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVer, int newVer) {
-//        String sql = "alter table person add picNum integer";
-//        db.execSQL(sql);
-//        db.execSQL(UserTable.UPGRADE_TABLE);
-//        onCreate(db);
         if(oldVer == 1){
             db.execSQL(UserTable.UPGRADE_TABLE);
         }

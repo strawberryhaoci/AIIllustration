@@ -19,10 +19,12 @@ public class User {
     public User(String name, String pwd) {
         password = pwd;
         username = name;
-//        userid++;
     }
     public User(){
 
+    }
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getPassword() {
@@ -47,10 +49,6 @@ public class User {
 
     public void setPicNum(int picNum) {
         this.picNum = picNum;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public void setUsername(String username) {

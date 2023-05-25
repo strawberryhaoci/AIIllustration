@@ -13,17 +13,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <ImageView
-            android:id="@+id/pic"
-            android:layout_width="300dp"
-            android:layout_height="400dp"
-            android:layout_marginStart="@dimen/blankH"
-            android:layout_marginEnd="@dimen/blankH"
-            android:layout_marginTop="@dimen/blankV"
-            android:layout_gravity="center"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_pic_null"
-            />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+            <ImageView
+                android:id="@+id/pic"
+                android:layout_width="300dp"
+                android:layout_height="400dp"
+                android:layout_marginStart="@dimen/blankH"
+                android:layout_marginEnd="@dimen/blankH"
+                android:layout_marginTop="@dimen/blankV"
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_pic_null"
+                />
+            <TextView
+                android:id="@+id/loading"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/generate"
+                android:textStyle="bold"
+                android:textColor="@color/theme_red"
+                />
+        </RelativeLayout>
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,8 +64,6 @@
                 android:thumbTint="@color/theme_pink"
                 android:progressTint="@color/theme_pink"
                 android:max="100"
-
-
                 />
         </LinearLayout>
         <LinearLayout

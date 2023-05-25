@@ -10,6 +10,7 @@
     <string name="home_item_3">种子</string>
     <string name="seed">种子</string>
     <string name="home_btn_draw">绘制</string>
+    <string name="generate">图像生成中</string>
     <string name="home_dis_hint">描述一下您的照片吧</string>
     <string name="home_seed_hint">请任意输入一个数字吧</string>
     <string name="login">登录</string>

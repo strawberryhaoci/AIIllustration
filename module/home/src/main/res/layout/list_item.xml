@@ -45,6 +45,7 @@
             android:text="@string/des"
             android:textColor="@color/theme_red"
             tools:ignore="NotSibling"
+            android:ellipsize="end"
             android:maxLines="1"/>
 
         <TextView

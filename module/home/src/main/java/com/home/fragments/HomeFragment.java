@@ -2,11 +2,16 @@ package com.home.fragments;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.renderscript.Allocation;
+import android.renderscript.Element;
+import android.renderscript.RenderScript;
+import android.renderscript.ScriptIntrinsicBlur;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +20,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.home.R;
+import com.util.ToastUtil;
 
 import java.util.Random;
 
@@ -80,7 +88,10 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         View v = inflater.inflate(R.layout.fragment_home, container, false);
+        TextView loading = v.findViewById(R.id.loading);
+        loading.setVisibility(View.GONE);
         sb_redraw_factor = v.findViewById(R.id.sb_redraw_factor);
         input_des = v.findViewById(R.id.input_des);
         input_seed = v.findViewById(R.id.input_seed);
@@ -114,6 +125,18 @@ public class HomeFragment extends Fragment {
                     seed = r.nextInt(1000000);
                 }
                 des = input_des.getText().toString();
+                Bundle bundle = getArguments();
+                if (bundle == null){
+                    ToastUtil.shortShow(getActivity(),"请先选择图片");
+                }else {
+
+                    Bitmap bitmap = BitmapFactory.decodeFile(picPath);
+                    ImageView imageView = v.findViewById(R.id.pic);
+                    bitmap = setGaussblur(20,bitmap);
+                    imageView.setImageBitmap(bitmap);
+                    loading.setVisibility(View.VISIBLE);
+                }
+
                 Log.d(TAG, "click draw");
             }
         });
@@ -138,6 +161,23 @@ public class HomeFragment extends Fragment {
             Bitmap bitmap = BitmapFactory.decodeFile(picPath);
             pic.setImageBitmap(bitmap);
             pic.invalidate();
+        }
+    }
+    public Bitmap setGaussblur(int radius, Bitmap source) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            RenderScript renderScript = RenderScript.create(getContext());
+            final Allocation input = Allocation.createFromBitmap(renderScript, source);
+            final Allocation output = Allocation.createTyped(renderScript, input.getType());
+            ScriptIntrinsicBlur scriptIntrinsicBlur;
+            scriptIntrinsicBlur = ScriptIntrinsicBlur.create(renderScript, Element.U8_4(renderScript));
+            scriptIntrinsicBlur.setInput(input);
+            scriptIntrinsicBlur.setRadius(radius);
+            scriptIntrinsicBlur.forEach(output);
+            output.copyTo(source);
+            renderScript.destroy();
+            return source;
+        } else {
+            return source;
         }
     }
 }
